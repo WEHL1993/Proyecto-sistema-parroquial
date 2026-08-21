@@ -6,9 +6,9 @@ interface LoginProps {
   onIngresar: (usuario: string) => void;
 }
 
-const etiqueta = 'mb-1.5 block text-[12px] font-semibold text-white';
+const etiqueta = 'mb-1.5 block text-[13px] font-semibold text-white';
 const campo =
-'w-full rounded-[3px] border border-navy-500 bg-navy-800 px-3 py-2 text-[13px] text-white placeholder:text-sky-400/60 outline-none transition-colors duration-150 ease-out focus:border-amber-accent focus:ring-1 focus:ring-amber-accent';
+'w-full rounded-[3px] border border-navy-500 bg-navy-800 px-3 py-2 text-[15px] text-white placeholder:text-sky-400/60 outline-none transition-colors duration-150 ease-out focus:border-amber-accent focus:ring-1 focus:ring-amber-accent';
 
 export function Login({ onIngresar }: LoginProps) {
   const [usuario, setUsuario] = useState('');
@@ -29,17 +29,17 @@ export function Login({ onIngresar }: LoginProps) {
     <div className="flex h-screen w-full overflow-hidden font-sans">
       <section className="flex w-full flex-col justify-center overflow-y-auto bg-navy-900 px-8 py-10 md:w-[38%] md:px-10 lg:px-12">
         <div className="mx-auto w-full max-w-[380px]">
-          <h1 className="text-[32px] font-bold leading-tight text-white">
+          <h1 className="text-[46px] font-bold leading-tight text-white">
             ¡Hola, Bienvenido!
           </h1>
-          <p className="mt-1 text-[13px] text-sky-300">
+          <p className="mt-2 text-[18px] text-sky-300">
             Parroquia Santa Cruz, Chiquimulilla
           </p>
 
           <div className="my-6 h-px bg-navy-700" />
 
-          <h2 className="text-[18px] font-semibold text-white">Iniciar sesión</h2>
-          <p className="mt-1 text-[12px] text-sky-400">
+          <h2 className="text-[20px] font-semibold text-white">Iniciar sesión</h2>
+          <p className="mt-1 text-[14px] text-sky-400">
             Use las credenciales asignadas por la administración.
           </p>
 
@@ -76,7 +76,7 @@ export function Login({ onIngresar }: LoginProps) {
             {error &&
             <p
               role="alert"
-              className="rounded-[3px] border border-amber-deep bg-amber-deep/15 px-2.5 py-1.5 text-[12px] text-amber-soft">
+              className="rounded-[3px] border border-amber-deep bg-amber-deep/15 px-2.5 py-1.5 text-[14px] text-amber-soft">
               
                 {error}
               </p>
@@ -85,7 +85,7 @@ export function Login({ onIngresar }: LoginProps) {
             <div className="pt-1">
               <button
                 type="submit"
-                className="flex w-full items-center justify-center gap-2 rounded-[3px] border border-white bg-sky-100 px-3 py-2 text-[13px] font-semibold text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-200">
+                className="flex w-full items-center justify-center gap-2 rounded-[3px] border border-white bg-sky-100 px-3 py-2 text-[15px] font-semibold text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-200">
 
                 <LogInIcon className="h-4 w-4" strokeWidth={1.8} />
                 Ingresar
@@ -93,7 +93,7 @@ export function Login({ onIngresar }: LoginProps) {
             </div>
           </form>
 
-          <p className="mt-8 text-[11px] text-sky-400/70">
+          <p className="mt-8 text-[15px] text-sky-400/70">
             Sistema de gestión parroquial
           </p>
         </div>
