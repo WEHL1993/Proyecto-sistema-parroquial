@@ -41,7 +41,7 @@ export function ConfirmDialog({
           <button
             type="button"
             onClick={onCancelar}
-            className="min-w-[92px] rounded-[2px] border border-navy-600/50 bg-white px-3 py-1 text-[12px] text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-100">
+            className="min-w-[92px] rounded-[2px] border border-navy-600/50 bg-sky-100 px-3 py-1 text-[12px] text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-100">
             
             No, volver
           </button>

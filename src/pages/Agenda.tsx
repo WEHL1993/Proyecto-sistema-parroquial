@@ -61,8 +61,8 @@ export function Agenda({ usuario, onCerrarSesion }: AgendaProps) {
   const [vistaPreviaAbierta, setVistaPreviaAbierta] = useState(false);
   const [mensaje, setMensaje] = useState('');
   const [calendarios, setCalendarios] = useState([
-  { id: 'oe', nombre: 'Office Eclesial', visible: true, color: '#2A5B99' },
-  { id: 'litur', nombre: 'Calendario litúrgico', visible: false, color: '#E08A1E' }]
+  { id: 'oe', nombre: 'Office Eclesial', visible: true, color: '#96253F' },
+  { id: 'litur', nombre: 'Calendario litúrgico', visible: false, color: '#D4AF37' }]
   );
 
   const agendaVisible = calendarios[0].visible;
@@ -191,14 +191,14 @@ export function Agenda({ usuario, onCerrarSesion }: AgendaProps) {
           onCerrarSesion={() => setConfirmarSalir(true)} />
         
 
-        <main className="flex min-w-0 flex-1 flex-col bg-white">
+        <main className="flex min-w-0 flex-1 flex-col bg-sky-100">
           <div className="flex shrink-0 items-center justify-between border-b border-sky-400 bg-gradient-to-b from-white to-sky-50 px-3 py-1.5">
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 aria-label="Periodo anterior"
                 onClick={() => navegar(-1)}
-                className="rounded-[2px] border border-navy-600/30 bg-white p-1 text-navy-700 transition-colors duration-150 ease-out hover:bg-sky-100">
+                className="rounded-[2px] border border-navy-600/30 bg-sky-100 p-1 text-navy-700 transition-colors duration-150 ease-out hover:bg-sky-100">
                 
                 <ChevronLeftIcon className="h-4 w-4" />
               </button>
@@ -206,7 +206,7 @@ export function Agenda({ usuario, onCerrarSesion }: AgendaProps) {
                 type="button"
                 aria-label="Periodo siguiente"
                 onClick={() => navegar(1)}
-                className="rounded-[2px] border border-navy-600/30 bg-white p-1 text-navy-700 transition-colors duration-150 ease-out hover:bg-sky-100">
+                className="rounded-[2px] border border-navy-600/30 bg-sky-100 p-1 text-navy-700 transition-colors duration-150 ease-out hover:bg-sky-100">
                 
                 <ChevronRightIcon className="h-4 w-4" />
               </button>

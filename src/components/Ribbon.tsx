@@ -30,7 +30,7 @@ function BotonGrande({
   activo = false,
   deshabilitado = false
 }: BotonGrandeProps) {
-  return <button type="button" onClick={onClick} disabled={deshabilitado} aria-pressed={activo || undefined} className={['flex w-[68px] flex-col items-center gap-1 rounded-[3px] border px-1 pb-1 pt-1.5 text-center text-[11px] leading-tight transition-colors duration-150 ease-out', deshabilitado ? 'cursor-not-allowed border-transparent text-navy-900/35' : activo ? 'border-amber-deep/60 bg-amber-soft text-navy-900 shadow-[0_1px_0_rgba(255,255,255,0.8)_inset]' : 'border-transparent text-navy-900 hover:border-sky-400 hover:bg-white/70'].join(' ')}>
+  return <button type="button" onClick={onClick} disabled={deshabilitado} aria-pressed={activo || undefined} className={['flex w-[68px] flex-col items-center gap-1 rounded-[3px] border px-1 pb-1 pt-1.5 text-center text-[11px] leading-tight transition-colors duration-150 ease-out', deshabilitado ? 'cursor-not-allowed border-transparent text-navy-900/35' : activo ? 'border-amber-deep/60 bg-amber-soft text-navy-900 shadow-[0_1px_0_rgba(255,255,255,0.8)_inset]' : 'border-transparent text-navy-900 hover:border-sky-400 hover:bg-sky-100/70'].join(' ')}>
       <Icono className={['h-6 w-6', deshabilitado ? 'text-navy-900/30' : activo ? 'text-amber-deep' : 'text-navy-700'].join(' ')} strokeWidth={1.6} />
       <span className="w-full break-words">{etiqueta}</span>
     </button>;

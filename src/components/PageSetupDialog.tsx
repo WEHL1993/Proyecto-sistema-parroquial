@@ -18,12 +18,12 @@ const VISTA_TECNICA: Record<VistaAgenda, string> = {
 type Pestana = 'formato' | 'encabezado';
 
 const campo =
-'rounded-[2px] border border-navy-600/40 bg-white px-2 py-1 text-[12px] text-navy-900 outline-none transition-colors duration-150 ease-out focus:border-amber-accent focus:ring-1 focus:ring-amber-accent';
+'rounded-[2px] border border-navy-600/40 bg-sky-100 px-2 py-1 text-[12px] text-navy-900 outline-none transition-colors duration-150 ease-out focus:border-amber-accent focus:ring-1 focus:ring-amber-accent';
 
 function Grupo({ titulo, children }: {titulo: string;children: React.ReactNode;}) {
   return (
     <div className="relative rounded-[2px] border border-navy-300 px-3 pb-3 pt-4">
-      <span className="absolute -top-2 left-2 bg-white px-1 text-[11px] font-semibold text-navy-700">
+      <span className="absolute -top-2 left-2 bg-sky-100 px-1 text-[11px] font-semibold text-navy-700">
         {titulo}
       </span>
       {children}
@@ -33,7 +33,7 @@ function Grupo({ titulo, children }: {titulo: string;children: React.ReactNode;}
 
 function Previsualizacion() {
   return (
-    <div className="mx-auto flex h-[92px] w-[74px] flex-col overflow-hidden rounded-[2px] border border-navy-400 bg-white shadow-sm">
+    <div className="mx-auto flex h-[92px] w-[74px] flex-col overflow-hidden rounded-[2px] border border-navy-400 bg-sky-100 shadow-sm">
       <div className="flex shrink-0 items-center gap-1 border-b border-navy-300 bg-sky-100 px-1 py-1">
         <span className="h-2 w-4 rounded-[1px] bg-navy-600" />
         <span className="ml-auto h-2 w-2 rounded-[1px] bg-sky-500" />
@@ -70,9 +70,9 @@ export function PageSetupDialog({ vista, onCerrar }: PageSetupDialogProps) {
         initial={{ opacity: 0, scale: 0.96, y: 8 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
-        className="w-full max-w-[600px] overflow-hidden rounded-[3px] border border-navy-300 bg-white shadow-dialog">
+        className="w-full max-w-[600px] overflow-hidden rounded-[3px] border border-navy-300 bg-sky-100 shadow-dialog">
         
-        <div className="flex items-center justify-between border-b border-navy-200 bg-white px-3 py-2">
+        <div className="flex items-center justify-between border-b border-navy-200 bg-sky-100 px-3 py-2">
           <h2 className="text-[13px] font-semibold text-navy-900">Configuración de Página</h2>
           <button
             type="button"
@@ -90,7 +90,7 @@ export function PageSetupDialog({ vista, onCerrar }: PageSetupDialogProps) {
           </p>
           <button
             type="button"
-            className="rounded-[2px] border border-navy-600/40 bg-white px-3 py-1 text-[12px] text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-100">
+            className="rounded-[2px] border border-navy-600/40 bg-sky-100 px-3 py-1 text-[12px] text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-100">
             
             Papel:
           </button>
@@ -103,7 +103,7 @@ export function PageSetupDialog({ vista, onCerrar }: PageSetupDialogProps) {
             className={[
             'rounded-t-[3px] border border-b-0 px-4 py-1 text-[12px] transition-colors duration-150 ease-out',
             pestana === 'formato' ?
-            'border-navy-300 bg-white font-semibold text-navy-900' :
+            'border-navy-300 bg-sky-100 font-semibold text-navy-900' :
             'border-transparent text-navy-700 hover:bg-sky-50'].
             join(' ')}>
             
@@ -115,7 +115,7 @@ export function PageSetupDialog({ vista, onCerrar }: PageSetupDialogProps) {
             className={[
             'rounded-t-[3px] border border-b-0 px-4 py-1 text-[12px] transition-colors duration-150 ease-out',
             pestana === 'encabezado' ?
-            'border-navy-300 bg-white font-semibold text-navy-900' :
+            'border-navy-300 bg-sky-100 font-semibold text-navy-900' :
             'border-transparent text-navy-700 hover:bg-sky-50'].
             join(' ')}>
             
@@ -181,7 +181,7 @@ export function PageSetupDialog({ vista, onCerrar }: PageSetupDialogProps) {
                       
                         <button
                         type="button"
-                        className="rounded-[2px] border border-navy-600/40 bg-white px-2 py-1 text-[12px] text-navy-900 hover:bg-sky-100">
+                        className="rounded-[2px] border border-navy-600/40 bg-sky-100 px-2 py-1 text-[12px] text-navy-900 hover:bg-sky-100">
                         
                           Fuente
                         </button>
@@ -197,7 +197,7 @@ export function PageSetupDialog({ vista, onCerrar }: PageSetupDialogProps) {
                       
                         <button
                         type="button"
-                        className="rounded-[2px] border border-navy-600/40 bg-white px-2 py-1 text-[12px] text-navy-900 hover:bg-sky-100">
+                        className="rounded-[2px] border border-navy-600/40 bg-sky-100 px-2 py-1 text-[12px] text-navy-900 hover:bg-sky-100">
                         
                           Fuente
                         </button>
@@ -247,7 +247,7 @@ export function PageSetupDialog({ vista, onCerrar }: PageSetupDialogProps) {
           <button
             type="button"
             onClick={onCerrar}
-            className="min-w-[88px] rounded-[2px] border border-navy-600/50 bg-white px-3 py-1 text-[12px] text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-100">
+            className="min-w-[88px] rounded-[2px] border border-navy-600/50 bg-sky-100 px-3 py-1 text-[12px] text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-100">
             
             Cancelar
           </button>

@@ -41,7 +41,7 @@ export function MonthView({
   );
 
   return (
-    <div className="flex h-full flex-col overflow-hidden bg-white">
+    <div className="flex h-full flex-col overflow-hidden bg-sky-100">
       <div className="grid shrink-0 grid-cols-7 border-b border-sky-400 bg-gradient-to-b from-sky-100 to-sky-200">
         {DIAS_LARGOS.map((d) =>
         <div
@@ -78,7 +78,7 @@ export function MonthView({
                 }}
                 className={[
                 'flex min-h-[92px] flex-col border-r border-sky-300 px-1 pb-1 pt-0.5',
-                delMes ? 'bg-white' : 'bg-sky-50/70',
+                delMes ? 'bg-sky-100' : 'bg-sky-50/70',
                 esSlotSeleccionado ?
                 'ring-2 ring-inset ring-amber-accent bg-amber-soft/50' :
                 seleccionado ?
@@ -95,7 +95,7 @@ export function MonthView({
                   className={[
                   'mb-0.5 self-end rounded-[2px] px-1 text-[11px] transition-colors duration-150 ease-out',
                   esHoy ?
-                  'bg-amber-accent font-semibold text-white' :
+                  'bg-amber-accent font-semibold text-navy-900' :
                   delMes ?
                   'font-semibold text-navy-900 hover:bg-sky-100' :
                   'text-navy-900/35 hover:bg-sky-100'].

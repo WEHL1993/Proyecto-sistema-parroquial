@@ -99,7 +99,7 @@ function BotonGrandeRibbon({
       type={onClick ? 'button' : 'submit'}
       onClick={onClick}
       disabled={deshabilitado}
-      className="flex w-[70px] flex-col items-center justify-center gap-1 rounded-[3px] px-1 py-1 text-center text-[11px] leading-tight text-navy-900 transition-colors duration-150 ease-out hover:bg-white/70 disabled:cursor-not-allowed disabled:text-navy-900/30 disabled:hover:bg-transparent">
+      className="flex w-[70px] flex-col items-center justify-center gap-1 rounded-[3px] px-1 py-1 text-center text-[11px] leading-tight text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-100/70 disabled:cursor-not-allowed disabled:text-navy-900/30 disabled:hover:bg-transparent">
       
       <Icono
         className={['h-7 w-7', deshabilitado ? 'text-navy-900/25' : activo ? 'text-amber-deep' : 'text-blue-700'].join(' ')}
@@ -128,7 +128,7 @@ function BotonPequenoRibbon({
       type="button"
       onClick={onClick}
       disabled={deshabilitado}
-      className="flex items-center gap-1.5 rounded-[2px] px-1.5 py-0.5 text-left text-[11px] text-navy-900 transition-colors duration-150 ease-out hover:bg-white/70 disabled:cursor-not-allowed disabled:text-navy-900/30 disabled:hover:bg-transparent">
+      className="flex items-center gap-1.5 rounded-[2px] px-1.5 py-0.5 text-left text-[11px] text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-100/70 disabled:cursor-not-allowed disabled:text-navy-900/30 disabled:hover:bg-transparent">
       
       <Icono className={`h-3.5 w-3.5 shrink-0 ${deshabilitado ? 'text-navy-900/25' : tono ?? 'text-navy-700'}`} strokeWidth={1.8} />
       {etiqueta}
@@ -146,9 +146,9 @@ function FilaCampo({ etiqueta, children }: {etiqueta: string;children: React.Rea
 }
 
 const campoInput =
-'rounded-[2px] border border-navy-600/40 bg-white px-2 py-1 text-[12px] text-navy-900 outline-none transition-colors duration-150 ease-out focus:border-amber-accent focus:ring-1 focus:ring-amber-accent';
+'rounded-[2px] border border-navy-600/40 bg-sky-100 px-2 py-1 text-[12px] text-navy-900 outline-none transition-colors duration-150 ease-out focus:border-amber-accent focus:ring-1 focus:ring-amber-accent';
 const campoSelectPequeno =
-'rounded-[2px] border border-navy-600/30 bg-white px-1 py-0.5 text-[11px] text-navy-900 outline-none focus:border-amber-accent focus:ring-1 focus:ring-amber-accent';
+'rounded-[2px] border border-navy-600/30 bg-sky-100 px-1 py-0.5 text-[11px] text-navy-900 outline-none focus:border-amber-accent focus:ring-1 focus:ring-amber-accent';
 
 export function AppointmentDialog({
   cita,
@@ -229,10 +229,10 @@ export function AppointmentDialog({
           initial={{ opacity: 0, scale: 0.97, y: 8 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
-          className="flex h-[600px] w-full max-w-[820px] flex-col overflow-hidden rounded-[4px] border border-navy-300 bg-white shadow-dialog">
+          className="flex h-[600px] w-full max-w-[820px] flex-col overflow-hidden rounded-[4px] border border-navy-300 bg-sky-100 shadow-dialog">
           
           {/* Barra de título de ventana */}
-          <div className="flex shrink-0 items-center justify-between border-b border-sky-300 bg-white px-2 py-1.5">
+          <div className="flex shrink-0 items-center justify-between border-b border-sky-300 bg-sky-100 px-2 py-1.5">
             <div className="flex items-center gap-2">
               <span className="flex h-6 w-6 items-center justify-center rounded-[2px] bg-navy-800">
                 <CalendarDaysIcon className="h-3.5 w-3.5 text-amber-accent" strokeWidth={2} />
@@ -259,7 +259,7 @@ export function AppointmentDialog({
 
           {/* Pestaña del mini-ribbon */}
           <div className="flex shrink-0 gap-0.5 border-b border-sky-300 bg-sky-50 px-2 pt-1">
-            <span className="rounded-t-[3px] border border-b-0 border-sky-300 bg-white px-4 py-1 text-[12px] font-semibold text-navy-900">
+            <span className="rounded-t-[3px] border border-b-0 border-sky-300 bg-sky-100 px-4 py-1 text-[12px] font-semibold text-navy-900">
               Appointment
             </span>
           </div>

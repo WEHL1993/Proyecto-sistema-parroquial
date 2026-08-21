@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { SearchIcon, LogInIcon } from 'lucide-react';
+import { LogInIcon } from 'lucide-react';
 
 interface LoginProps {
   onIngresar: (usuario: string) => void;
@@ -11,15 +11,14 @@ const campo =
 'w-full rounded-[3px] border border-navy-500 bg-navy-800 px-3 py-2 text-[13px] text-white placeholder:text-sky-400/60 outline-none transition-colors duration-150 ease-out focus:border-amber-accent focus:ring-1 focus:ring-amber-accent';
 
 export function Login({ onIngresar }: LoginProps) {
-  const [servidor, setServidor] = useState('http://127.0.0.1:5081');
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   function ingresar(e: React.FormEvent) {
     e.preventDefault();
-    if (!servidor.trim() || !usuario.trim() || !contrasena.trim()) {
-      setError('Complete el servidor, el usuario y la contraseña para continuar.');
+    if (!usuario.trim() || !contrasena.trim()) {
+      setError('Complete el usuario y la contraseña para continuar.');
       return;
     }
     setError(null);
@@ -45,19 +44,6 @@ export function Login({ onIngresar }: LoginProps) {
           </p>
 
           <form onSubmit={ingresar} className="mt-5 space-y-4">
-            <div>
-              <label htmlFor="servidor" className={etiqueta}>
-                Servidor API
-              </label>
-              <input
-                id="servidor"
-                value={servidor}
-                onChange={(e) => setServidor(e.target.value)}
-                placeholder="http://127.0.0.1:5081"
-                className={campo} />
-              
-            </div>
-
             <div>
               <label htmlFor="usuario" className={etiqueta}>
                 Usuario
@@ -96,18 +82,11 @@ export function Login({ onIngresar }: LoginProps) {
               </p>
             }
 
-            <div className="flex gap-3 pt-1">
-              <button
-                type="button"
-                className="flex flex-1 items-center justify-center gap-2 rounded-[3px] border border-sky-400/60 bg-transparent px-3 py-2 text-[13px] font-semibold text-sky-200 transition-colors duration-150 ease-out hover:bg-navy-800">
-                
-                <SearchIcon className="h-4 w-4" strokeWidth={1.8} />
-                Buscar servidor
-              </button>
+            <div className="pt-1">
               <button
                 type="submit"
-                className="flex flex-1 items-center justify-center gap-2 rounded-[3px] border border-white bg-white px-3 py-2 text-[13px] font-semibold text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-200">
-                
+                className="flex w-full items-center justify-center gap-2 rounded-[3px] border border-white bg-sky-100 px-3 py-2 text-[13px] font-semibold text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-200">
+
                 <LogInIcon className="h-4 w-4" strokeWidth={1.8} />
                 Ingresar
               </button>
@@ -115,12 +94,12 @@ export function Login({ onIngresar }: LoginProps) {
           </form>
 
           <p className="mt-8 text-[11px] text-sky-400/70">
-            Office Eclesial · Sistema de gestión parroquial · v4.2
+            Sistema de gestión parroquial
           </p>
         </div>
       </section>
 
-      <section className="hidden flex-1 items-center justify-center bg-white p-10 md:flex">
+      <section className="hidden flex-1 items-center justify-center bg-sky-100 p-10 md:flex">
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -131,7 +110,7 @@ export function Login({ onIngresar }: LoginProps) {
             'conic-gradient(from 210deg, #C9971F, #F3DFA2, #B8860B, #F7E7B4, #C9971F)'
           }}>
           
-          <div className="h-full w-full overflow-hidden rounded-full border-[6px] border-white shadow-[0_18px_50px_rgba(15,38,71,0.22)]">
+          <div className="h-full w-full overflow-hidden rounded-full border-[6px] border-white shadow-[0_18px_50px_rgba(92,6,27,0.22)]">
             <img
               src="/login-imagen.jpeg"
               alt="Imagen de la parroquia"

@@ -59,7 +59,7 @@ export function MiniCalendar({
   const enRangoLista = dias.map((d) => enRangoDeVista(d, vista, fechaSeleccionada));
 
   return (
-    <section className="border-b border-sky-400 bg-white px-2 py-2" aria-label="Calendario mensual">
+    <section className="border-b border-sky-400 bg-sky-100 px-2 py-2" aria-label="Calendario mensual">
       <div className="mb-1 flex items-center justify-between">
         <button
           type="button"
@@ -108,7 +108,7 @@ export function MiniCalendar({
               className={[
               'relative h-[22px] text-[11px] transition-colors duration-150 ease-out',
               seleccionado ?
-              'rounded-full bg-amber-accent font-semibold text-white' :
+              'rounded-full bg-amber-accent font-semibold text-navy-900' :
               enRango ?
               [
               'bg-amber-soft text-navy-900',

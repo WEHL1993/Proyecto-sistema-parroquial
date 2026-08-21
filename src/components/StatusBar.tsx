@@ -37,7 +37,7 @@ export function StatusBar({
         <button
           type="button"
           onClick={onCerrarSesion}
-          className="flex items-center gap-1.5 rounded-[2px] border border-navy-600/40 bg-white px-2 py-[2px] font-semibold text-navy-800 transition-colors duration-150 ease-out hover:bg-sky-100">
+          className="flex items-center gap-1.5 rounded-[2px] border border-navy-600/40 bg-sky-100 px-2 py-[2px] font-semibold text-navy-800 transition-colors duration-150 ease-out hover:bg-sky-100">
           
           <LogOutIcon className="h-3.5 w-3.5 text-navy-600" />
           Cerrar sesión

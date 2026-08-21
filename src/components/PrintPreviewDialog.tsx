@@ -94,7 +94,7 @@ function CuadriculaMes({ fecha, citas }: {fecha: Date;citas: Appointment[];}) {
               key={dia.toISOString()}
               className={[
               'min-h-[52px] border-r border-navy-200 px-1 py-0.5 last:border-r-0',
-              delMes ? 'bg-white' : 'bg-sky-50/60'].
+              delMes ? 'bg-sky-100' : 'bg-sky-50/60'].
               join(' ')}>
               
                 <div
@@ -165,7 +165,7 @@ export function PrintPreviewDialog({ vista, fecha, citas, onCerrar }: PrintPrevi
           <button
             type="button"
             onClick={onCerrar}
-            className="flex items-center gap-1.5 rounded-[2px] border border-sky-400/40 bg-white px-3 py-1 text-[12px] font-semibold text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-100">
+            className="flex items-center gap-1.5 rounded-[2px] border border-sky-400/40 bg-sky-100 px-3 py-1 text-[12px] font-semibold text-navy-900 transition-colors duration-150 ease-out hover:bg-sky-100">
             
             <XIcon className="h-3.5 w-3.5" strokeWidth={1.8} />
             Cerrar
@@ -174,7 +174,7 @@ export function PrintPreviewDialog({ vista, fecha, citas, onCerrar }: PrintPrevi
       </div>
 
       <div className="flex-1 overflow-y-auto px-6 py-8">
-        <div className="mx-auto w-full max-w-[680px] rounded-[2px] bg-white p-8 shadow-dialog">
+        <div className="mx-auto w-full max-w-[680px] rounded-[2px] bg-sky-100 p-8 shadow-dialog">
           <div className="mb-4 border-b-2 border-navy-800 pb-2">
             <p className="text-[11px] text-navy-800/70">Office Eclesial — Agenda parroquial</p>
             <h1 className="text-[20px] font-bold capitalize text-navy-900">{tituloRango}</h1>

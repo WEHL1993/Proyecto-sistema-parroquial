@@ -64,7 +64,7 @@ export function Sidebar({
           const Icono = ICONOS_MODULO[m.id];
           const activo = m.id === 'agenda';
           return <li key={m.id}>
-                <button type="button" aria-current={activo ? 'page' : undefined} className={['flex w-full items-center gap-2.5 border-l-[3px] px-2 py-[7px] text-left text-[12px] transition-colors duration-150 ease-out', activo ? 'border-amber-accent bg-white font-semibold text-navy-900' : 'border-transparent text-navy-800 hover:bg-sky-100'].join(' ')}>
+                <button type="button" aria-current={activo ? 'page' : undefined} className={['flex w-full items-center gap-2.5 border-l-[3px] px-2 py-[7px] text-left text-[12px] transition-colors duration-150 ease-out', activo ? 'border-amber-accent bg-sky-100 font-semibold text-navy-900' : 'border-transparent text-navy-800 hover:bg-sky-100'].join(' ')}>
                   <Icono className={['h-[18px] w-[18px]', activo ? 'text-amber-deep' : 'text-navy-600'].join(' ')} strokeWidth={1.7} />
                   {m.nombre}
                 </button>
@@ -74,7 +74,7 @@ export function Sidebar({
       </div>
 
       <div className="shrink-0 border-t border-sky-400 p-2">
-        <button type="button" onClick={onCerrarSesion} className="flex w-full items-center gap-2 rounded-[2px] border border-navy-600/30 bg-white px-2 py-1.5 text-[12px] font-semibold text-navy-800 transition-colors duration-150 ease-out hover:bg-sky-100">
+        <button type="button" onClick={onCerrarSesion} className="flex w-full items-center gap-2 rounded-[2px] border border-navy-600/30 bg-sky-100 px-2 py-1.5 text-[12px] font-semibold text-navy-800 transition-colors duration-150 ease-out hover:bg-sky-100">
           <LogOutIcon className="h-4 w-4 text-navy-600" strokeWidth={1.7} />
           Cerrar sesión
         </button>

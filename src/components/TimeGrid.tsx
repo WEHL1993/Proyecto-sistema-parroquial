@@ -49,7 +49,7 @@ export function TimeGrid({
   );
 
   return (
-    <div className="flex h-full flex-col overflow-hidden bg-white">
+    <div className="flex h-full flex-col overflow-hidden bg-sky-100">
       {mostrarEncabezado &&
       <div className="flex shrink-0 border-b border-sky-400 bg-gradient-to-b from-sky-100 to-sky-200">
           <div className="w-[58px] shrink-0 border-r border-sky-400" />
@@ -132,7 +132,7 @@ export function TimeGrid({
                       'bg-amber-soft ring-2 ring-inset ring-amber-accent' :
                       esHoy ?
                       'bg-[#FFFBF3]' :
-                      'bg-white'].
+                      'bg-sky-100'].
                       join(' ')} />);
 
 
