@@ -1,9 +1,9 @@
-import React from "react";
-import { CalendarCheckIcon, UsersIcon, HomeIcon, BookOpenIcon, DropletsIcon, CoinsIcon, ChurchIcon, LogOutIcon, BoxIcon } from "lucide-react";
+import { CalendarCheckIcon, UsersIcon, HomeIcon, BookOpenIcon, DropletsIcon, CoinsIcon, ChurchIcon, LogOutIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Appointment, VistaAgenda } from "../types/agenda";
 import { modulos } from "../data/modulos";
 import { MiniCalendar } from "./MiniCalendar";
-const ICONOS_MODULO: Record<string, BoxIcon> = {
+const ICONOS_MODULO: Record<string, LucideIcon> = {
   agenda: CalendarCheckIcon,
   personas: UsersIcon,
   familias: HomeIcon,
@@ -24,6 +24,7 @@ interface SidebarProps {
     color: string;
   }[];
   onToggleCalendario: (id: string) => void;
+  onAbrirPersonas: () => void;
   onCerrarSesion: () => void;
 }
 export function Sidebar({
@@ -33,6 +34,7 @@ export function Sidebar({
   citas,
   calendarios,
   onToggleCalendario,
+  onAbrirPersonas,
   onCerrarSesion
 }: SidebarProps) {
   return <nav aria-label="Panel lateral" className="flex w-[212px] shrink-0 flex-col border-r border-navy-700/40 bg-sky-50">
@@ -63,8 +65,8 @@ export function Sidebar({
           {modulos.map((m) => {
           const Icono = ICONOS_MODULO[m.id];
           const activo = m.id === 'agenda';
-          return <li key={m.id}>
-                <button type="button" aria-current={activo ? 'page' : undefined} className={['flex w-full items-center gap-2.5 border-l-[3px] px-2 py-[7px] text-left text-[12px] transition-colors duration-150 ease-out', activo ? 'border-amber-accent bg-sky-100 font-semibold text-navy-900' : 'border-transparent text-navy-800 hover:bg-sky-100'].join(' ')}>
+              return <li key={m.id}>
+                <button type="button" aria-current={activo ? 'page' : undefined} onClick={m.id === 'personas' ? onAbrirPersonas : undefined} className={['flex w-full items-center gap-2.5 border-l-[3px] px-2 py-[7px] text-left text-[12px] transition-colors duration-150 ease-out', activo ? 'border-amber-accent bg-sky-100 font-semibold text-navy-900' : 'border-transparent text-navy-800 hover:bg-sky-100'].join(' ')}>
                   <Icono className={['h-[18px] w-[18px]', activo ? 'text-amber-deep' : 'text-navy-600'].join(' ')} strokeWidth={1.7} />
                   {m.nombre}
                 </button>
