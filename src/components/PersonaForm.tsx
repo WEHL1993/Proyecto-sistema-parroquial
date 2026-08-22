@@ -178,7 +178,7 @@ export const PersonaForm = forwardRef<PersonaFormHandle, PersonaFormProps>(funct
     <section className="mt-3 shrink-0 border border-sky-400 bg-sky-50 p-3">
       <h3 className="mb-2 border-b border-sky-400 pb-1 text-[12px] font-semibold uppercase tracking-wide text-navy-800">Información parroquial</h3>
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-        <Campo etiqueta="Pertenece al radio parroquial *"><select value={datos.perteneceRadioParroquial} onChange={(event) => actualizar('perteneceRadioParroquial', event.target.value as PersonaFormData['perteneceRadioParroquial'])} className={controlClase}><option>Sí</option><option>No</option></select></Campo>
+        <Campo etiqueta="Pertenece al radio parroquial *"><select value={datos.perteneceRadioParroquial} onChange={(event) => actualizar('perteneceRadioParroquial', event.target.value as PersonaFormData['perteneceRadioParroquial'])} className={controlClase}><option value="Sí">Sí</option><option value="No">No</option></select></Campo>
         <Campo etiqueta="Parroquia a la que pertenece"><input maxLength={50} disabled={datos.perteneceRadioParroquial === 'Sí'} value={datos.parroquiaQuePertenece} onChange={(event) => actualizar('parroquiaQuePertenece', event.target.value)} className={controlClase} /></Campo>
       </div>
     </section>

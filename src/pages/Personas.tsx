@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { PersonaFormHandle } from '../components/PersonaForm';
 import { PersonaForm } from '../components/PersonaForm';
 import { PersonasRibbon } from '../components/PersonasRibbon';
@@ -19,6 +19,8 @@ interface PersonasProps {
 export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
   const [modo, setModo] = useState<'padron' | 'nuevo' | 'editar' | 'consultar'>('padron');
   const formularioRef = useRef<PersonaFormHandle>(null);
+  const busquedaRef = useRef<HTMLInputElement>(null);
+  const sexoRef = useRef<HTMLSelectElement>(null);
   const [personas, setPersonas] = useState<PersonaRegistro[]>([]);
   const [busqueda, setBusqueda] = useState('');
   const [sexo, setSexo] = useState<Sexo>('Todos');
@@ -28,6 +30,21 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
   const [confirmarDesactivacion, setConfirmarDesactivacion] = useState(false);
 
   const personaSeleccionada = personas.find((persona) => persona.id === personaSeleccionadaId);
+  const terminoBusqueda = busqueda.trim().toLocaleLowerCase();
+  const personasFiltradas = personas.filter((persona) => {
+    const coincideBusqueda = !terminoBusqueda || [persona.nombre, persona.apellido, persona.apellidoMaterno, persona.documento]
+      .some((valor) => valor.toLocaleLowerCase().includes(terminoBusqueda));
+    const coincideSexo = sexo === 'Todos' || persona.sexo === sexo;
+    const coincideDocumento = tipoDocumento === 'Todos' || persona.tipoDocumento === tipoDocumento;
+    const coincideRadio = radioParroquial === 'Todos' || persona.perteneceRadioParroquial === radioParroquial;
+    return coincideBusqueda && coincideSexo && coincideDocumento && coincideRadio;
+  });
+
+  useEffect(() => {
+    if (personaSeleccionadaId !== null && !personasFiltradas.some((persona) => persona.id === personaSeleccionadaId)) {
+      setPersonaSeleccionadaId(null);
+    }
+  }, [personaSeleccionadaId, personasFiltradas]);
 
   function limpiarFiltros() {
     setBusqueda('');
@@ -69,8 +86,8 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
         if (personaSeleccionada) setConfirmarDesactivacion(true);
       }}
       onActualizar={() => undefined}
-      onBuscar={() => formularioRef.current?.cargarFoto()}
-      onFiltros={() => formularioRef.current?.quitarFoto()}
+      onBuscar={() => busquedaRef.current?.focus()}
+      onFiltros={() => sexoRef.current?.focus()}
       onLimpiar={() => modo === 'nuevo' ? formularioRef.current?.limpiar() : limpiarFiltros()}
       onGuardar={() => formularioRef.current?.guardar()}
       onCancelar={volverAlPadron}
@@ -95,11 +112,11 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
         <div className="flex shrink-0 flex-wrap items-end gap-2 border-b border-sky-400 bg-sky-50 px-4 py-2">
           <label className="flex min-w-[260px] flex-1 flex-col gap-1 text-[11px] font-semibold text-navy-800">
             Buscar
-            <input type="search" value={busqueda} onChange={(event) => setBusqueda(event.target.value)} placeholder="Buscar por nombre, apellido o documento..." className="h-7 rounded-[2px] border border-navy-600/30 bg-white px-2 text-[12px] font-normal text-navy-900 outline-none focus:border-amber-deep" />
+            <input ref={busquedaRef} type="search" value={busqueda} onChange={(event) => setBusqueda(event.target.value)} placeholder="Buscar por nombre, apellido o documento..." className="h-7 rounded-[2px] border border-navy-600/30 bg-white px-2 text-[12px] font-normal text-navy-900 outline-none focus:border-amber-deep" />
           </label>
           <label className="flex flex-col gap-1 text-[11px] font-semibold text-navy-800">
             Sexo
-            <select value={sexo} onChange={(event) => setSexo(event.target.value as Sexo)} className="h-7 rounded-[2px] border border-navy-600/30 bg-white px-1.5 text-[12px] font-normal text-navy-900">
+            <select ref={sexoRef} value={sexo} onChange={(event) => setSexo(event.target.value as Sexo)} className="h-7 rounded-[2px] border border-navy-600/30 bg-white px-1.5 text-[12px] font-normal text-navy-900">
               <option>Todos</option><option>Masculino</option><option>Femenino</option>
             </select>
           </label>
@@ -112,7 +129,7 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
           <label className="flex flex-col gap-1 text-[11px] font-semibold text-navy-800">
             Radio parroquial
             <select value={radioParroquial} onChange={(event) => setRadioParroquial(event.target.value as RadioParroquial)} className="h-7 rounded-[2px] border border-navy-600/30 bg-white px-1.5 text-[12px] font-normal text-navy-900">
-              <option>Todos</option><option>Sí</option><option>No</option>
+              <option value="Todos">Todos</option><option value="Sí">Sí</option><option value="No">No</option>
             </select>
           </label>
         </div>
@@ -131,7 +148,12 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
                     <p className="font-semibold">No hay personas registradas.</p>
                     <p className="mt-1 text-[11px]">Utilice la opción Nuevo para registrar la primera persona.</p>
                   </td>
-                </tr> : personas.map((persona) => <tr key={persona.id} onClick={() => setPersonaSeleccionadaId(persona.id)} className={['border-b border-sky-200 hover:bg-sky-50', persona.id === personaSeleccionadaId ? 'bg-sky-100' : '', !persona.activo ? 'text-navy-800/50' : ''].join(' ')}>
+                </tr> : personasFiltradas.length === 0 ? <tr>
+                  <td colSpan={9} className="h-48 px-4 text-center text-navy-800/70">
+                    <p className="font-semibold">No se encontraron personas.</p>
+                    <p className="mt-1 text-[11px]">No hay registros que coincidan con los criterios de búsqueda o filtros seleccionados.</p>
+                  </td>
+                </tr> : personasFiltradas.map((persona) => <tr key={persona.id} onClick={() => setPersonaSeleccionadaId(persona.id)} className={['border-b border-sky-200 hover:bg-sky-50', persona.id === personaSeleccionadaId ? 'bg-sky-100' : '', !persona.activo ? 'text-navy-800/50' : ''].join(' ')}>
                   <td className="px-2 py-2">{persona.id}</td>
                   <td className="px-2 py-2">{[persona.nombre, persona.apellido, persona.apellidoMaterno].filter(Boolean).join(' ')}</td>
                   <td className="px-2 py-2">{persona.sexo}</td>
