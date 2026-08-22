@@ -10,7 +10,7 @@ export interface PersonaFormHandle {
 }
 
 interface PersonaFormProps {
-  modo: 'nuevo' | 'editar';
+  modo: 'nuevo' | 'editar' | 'consultar';
   datosIniciales?: PersonaFormData;
   onCancelar: () => void;
   onGuardar: (datos: PersonaFormData) => void;
@@ -99,6 +99,7 @@ export const PersonaForm = forwardRef<PersonaFormHandle, PersonaFormProps>(funct
 
   function guardar(event?: FormEvent) {
     event?.preventDefault();
+    if (modo === 'consultar') return;
     const nuevosErrores: ErroresFormulario = {};
     if (!datos.nombre.trim()) nuevosErrores.nombre = 'Este campo es obligatorio.';
     if (!datos.apellido.trim()) nuevosErrores.apellido = 'Este campo es obligatorio.';
@@ -110,14 +111,24 @@ export const PersonaForm = forwardRef<PersonaFormHandle, PersonaFormProps>(funct
     if (Object.keys(nuevosErrores).length === 0) onGuardar(datos);
   }
 
-  useImperativeHandle(ref, () => ({ guardar: () => guardar(), limpiar, cargarFoto: () => archivoRef.current?.click(), quitarFoto }));
+  useImperativeHandle(ref, () => ({
+    guardar: () => guardar(),
+    limpiar,
+    cargarFoto: () => {
+      if (modo !== 'consultar') archivoRef.current?.click();
+    },
+    quitarFoto: () => {
+      if (modo !== 'consultar') quitarFoto();
+    }
+  }));
 
   return <form onSubmit={guardar} className="flex min-h-0 flex-1 flex-col overflow-auto bg-sky-100 px-4 py-4">
     <div className="mb-3 shrink-0">
-      <h2 className="text-[16px] font-semibold text-navy-900">{modo === 'nuevo' ? 'Registrar nueva persona' : 'Editar persona'}</h2>
-      <p className="mt-1 text-[12px] text-navy-800/70">{modo === 'nuevo' ? 'Ingrese la información de la persona registrada en la parroquia' : 'Modifique la información de la persona seleccionada'}</p>
+      <h2 className="text-[16px] font-semibold text-navy-900">{modo === 'nuevo' ? 'Registrar nueva persona' : modo === 'editar' ? 'Editar persona' : 'Consultar persona'}</h2>
+      <p className="mt-1 text-[12px] text-navy-800/70">{modo === 'nuevo' ? 'Ingrese la información de la persona registrada en la parroquia' : modo === 'editar' ? 'Modifique la información de la persona seleccionada' : 'Información registrada de la persona seleccionada'}</p>
     </div>
 
+    <fieldset disabled={modo === 'consultar'} className="contents">
     <div className="grid shrink-0 grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_220px]">
       <section className="border border-sky-400 bg-sky-50 p-3">
         <h3 className="mb-2 border-b border-sky-400 pb-1 text-[12px] font-semibold uppercase tracking-wide text-navy-800">Datos personales</h3>
@@ -175,10 +186,11 @@ export const PersonaForm = forwardRef<PersonaFormHandle, PersonaFormProps>(funct
     <section className="mt-3 shrink-0 border border-sky-400 bg-sky-50 p-3">
       <Campo etiqueta="Observaciones"><textarea value={datos.observaciones} onChange={(event) => actualizar('observaciones', event.target.value)} className="min-h-[72px] rounded-[2px] border border-navy-600/30 bg-white px-2 py-1 text-[12px] font-normal text-navy-900 outline-none focus:border-amber-deep" /></Campo>
     </section>
+    </fieldset>
 
-    <div className="mt-3 flex shrink-0 justify-end gap-2">
+    {modo !== 'consultar' && <div className="mt-3 flex shrink-0 justify-end gap-2">
       <button type="submit" className="h-7 rounded-[2px] border border-amber-deep/60 bg-amber-soft px-3 text-[11px] font-semibold text-navy-900 hover:bg-amber-accent">Guardar</button>
       <button type="button" onClick={onCancelar} className="h-7 rounded-[2px] border border-navy-600/30 bg-sky-100 px-3 text-[11px] font-semibold text-navy-800 hover:bg-sky-200">Cancelar</button>
-    </div>
+    </div>}
   </form>;
 });

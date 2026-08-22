@@ -5,6 +5,7 @@ import {
   ListFilterIcon,
   PencilIcon,
   RefreshCwIcon,
+  ArrowLeftIcon,
   UserPlusIcon,
   UserRoundXIcon,
   UsersIcon
@@ -12,7 +13,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 
 interface PersonasRibbonProps {
-  modo: 'padron' | 'nuevo' | 'editar';
+  modo: 'padron' | 'nuevo' | 'editar' | 'consultar';
   onAbrir: () => void;
   onNuevo: () => void;
   onEditar: () => void;
@@ -25,6 +26,7 @@ interface PersonasRibbonProps {
   onCancelar: () => void;
   onCargarFoto: () => void;
   onQuitarFoto: () => void;
+  onCerrarConsulta: () => void;
   hayPersonaSeleccionada: boolean;
 }
 
@@ -75,6 +77,7 @@ export function PersonasRibbon({
   onCancelar,
   onCargarFoto,
   onQuitarFoto,
+  onCerrarConsulta,
   hayPersonaSeleccionada
 }: PersonasRibbonProps) {
   return <header className="shrink-0 border-b border-navy-700/40 bg-sky-200">
@@ -106,7 +109,9 @@ export function PersonasRibbon({
           <BotonGrande icono={ListFilterIcon} etiqueta="Filtros" onClick={onFiltros} />
           <BotonGrande icono={EraserIcon} etiqueta="Limpiar" onClick={onLimpiar} />
         </Grupo>
-      </> : <>
+      </> : modo === 'consultar' ? <Grupo titulo="Consulta">
+        <BotonGrande icono={ArrowLeftIcon} etiqueta="Regresar" onClick={onCerrarConsulta} />
+      </Grupo> : <>
         <Grupo titulo="Registro">
           <BotonGrande icono={FolderOpenIcon} etiqueta="Guardar" onClick={onGuardar} />
           <BotonGrande icono={EraserIcon} etiqueta="Limpiar" onClick={onLimpiar} />

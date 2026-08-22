@@ -16,7 +16,7 @@ interface PersonasProps {
 }
 
 export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
-  const [modo, setModo] = useState<'padron' | 'nuevo' | 'editar'>('padron');
+  const [modo, setModo] = useState<'padron' | 'nuevo' | 'editar' | 'consultar'>('padron');
   const formularioRef = useRef<PersonaFormHandle>(null);
   const [personas, setPersonas] = useState<PersonaRegistro[]>([]);
   const [busqueda, setBusqueda] = useState('');
@@ -53,7 +53,7 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
   return <div className="flex h-screen w-full flex-col overflow-hidden bg-sky-100 font-sans text-navy-900">
     <PersonasRibbon
       modo={modo}
-      onAbrir={() => undefined}
+      onAbrir={() => personaSeleccionada && setModo('consultar')}
       onNuevo={() => setModo('nuevo')}
       onEditar={() => personaSeleccionada && setModo('editar')}
       onDesactivar={() => undefined}
@@ -65,11 +65,12 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
       onCancelar={volverAlPadron}
       onCargarFoto={() => formularioRef.current?.cargarFoto()}
       onQuitarFoto={() => formularioRef.current?.quitarFoto()}
+      onCerrarConsulta={volverAlPadron}
       hayPersonaSeleccionada={personaSeleccionadaId !== null} />
 
     <div className="flex min-h-0 flex-1">
       <PersonasSidebar onVolverAgenda={onVolverAgenda} onCerrarSesion={onCerrarSesion} />
-      {modo !== 'padron' ? <PersonaForm key={`${modo}-${personaSeleccionadaId ?? 'nuevo'}`} ref={formularioRef} modo={modo} datosIniciales={modo === 'editar' ? personaSeleccionada : undefined} onCancelar={volverAlPadron} onGuardar={guardarPersona} /> : <main className="flex min-w-0 flex-1 flex-col bg-sky-100">
+      {modo !== 'padron' ? <PersonaForm key={`${modo}-${personaSeleccionadaId ?? 'nuevo'}`} ref={formularioRef} modo={modo} datosIniciales={modo === 'editar' || modo === 'consultar' ? personaSeleccionada : undefined} onCancelar={volverAlPadron} onGuardar={guardarPersona} /> : <main className="flex min-w-0 flex-1 flex-col bg-sky-100">
         <div className="flex shrink-0 items-end justify-between border-b border-sky-400 bg-gradient-to-b from-white to-sky-50 px-4 py-3">
           <div>
             <h2 className="text-[16px] font-semibold text-navy-900">Padrón general de personas</h2>
