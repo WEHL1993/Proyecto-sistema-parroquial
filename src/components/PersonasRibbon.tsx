@@ -12,6 +12,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 
 interface PersonasRibbonProps {
+  modo: 'padron' | 'nuevo';
   onAbrir: () => void;
   onNuevo: () => void;
   onEditar: () => void;
@@ -20,6 +21,10 @@ interface PersonasRibbonProps {
   onBuscar: () => void;
   onFiltros: () => void;
   onLimpiar: () => void;
+  onGuardar: () => void;
+  onCancelar: () => void;
+  onCargarFoto: () => void;
+  onQuitarFoto: () => void;
   hayPersonaSeleccionada: boolean;
 }
 
@@ -57,6 +62,7 @@ function Grupo({
 }
 
 export function PersonasRibbon({
+  modo,
   onAbrir,
   onNuevo,
   onEditar,
@@ -65,6 +71,10 @@ export function PersonasRibbon({
   onBuscar,
   onFiltros,
   onLimpiar,
+  onGuardar,
+  onCancelar,
+  onCargarFoto,
+  onQuitarFoto,
   hayPersonaSeleccionada
 }: PersonasRibbonProps) {
   return <header className="shrink-0 border-b border-navy-700/40 bg-sky-200">
@@ -83,18 +93,30 @@ export function PersonasRibbon({
     </div>
 
     <div className="flex h-[92px] items-stretch bg-gradient-to-b from-sky-100 to-sky-200 px-1 pt-1">
-      <Grupo titulo="Acciones">
-        <BotonGrande icono={FolderOpenIcon} etiqueta="Abrir" onClick={onAbrir} deshabilitado={!hayPersonaSeleccionada} />
-        <BotonGrande icono={UserPlusIcon} etiqueta="Nuevo" onClick={onNuevo} />
-        <BotonGrande icono={PencilIcon} etiqueta="Editar" onClick={onEditar} deshabilitado={!hayPersonaSeleccionada} />
-        <BotonGrande icono={UserRoundXIcon} etiqueta="Desactivar" onClick={onDesactivar} deshabilitado={!hayPersonaSeleccionada} />
-        <BotonGrande icono={RefreshCwIcon} etiqueta="Actualizar" onClick={onActualizar} />
-      </Grupo>
-      <Grupo titulo="Consulta">
-        <BotonGrande icono={FileSearchIcon} etiqueta="Buscar" onClick={onBuscar} />
-        <BotonGrande icono={ListFilterIcon} etiqueta="Filtros" onClick={onFiltros} />
-        <BotonGrande icono={EraserIcon} etiqueta="Limpiar" onClick={onLimpiar} />
-      </Grupo>
+      {modo === 'padron' ? <>
+        <Grupo titulo="Acciones">
+          <BotonGrande icono={FolderOpenIcon} etiqueta="Abrir" onClick={onAbrir} deshabilitado={!hayPersonaSeleccionada} />
+          <BotonGrande icono={UserPlusIcon} etiqueta="Nuevo" onClick={onNuevo} />
+          <BotonGrande icono={PencilIcon} etiqueta="Editar" onClick={onEditar} deshabilitado={!hayPersonaSeleccionada} />
+          <BotonGrande icono={UserRoundXIcon} etiqueta="Desactivar" onClick={onDesactivar} deshabilitado={!hayPersonaSeleccionada} />
+          <BotonGrande icono={RefreshCwIcon} etiqueta="Actualizar" onClick={onActualizar} />
+        </Grupo>
+        <Grupo titulo="Consulta">
+          <BotonGrande icono={FileSearchIcon} etiqueta="Buscar" onClick={onBuscar} />
+          <BotonGrande icono={ListFilterIcon} etiqueta="Filtros" onClick={onFiltros} />
+          <BotonGrande icono={EraserIcon} etiqueta="Limpiar" onClick={onLimpiar} />
+        </Grupo>
+      </> : <>
+        <Grupo titulo="Registro">
+          <BotonGrande icono={FolderOpenIcon} etiqueta="Guardar" onClick={onGuardar} />
+          <BotonGrande icono={EraserIcon} etiqueta="Limpiar" onClick={onLimpiar} />
+          <BotonGrande icono={UserRoundXIcon} etiqueta="Cancelar" onClick={onCancelar} />
+        </Grupo>
+        <Grupo titulo="Fotografía">
+          <BotonGrande icono={UserPlusIcon} etiqueta="Cargar foto" onClick={onCargarFoto} />
+          <BotonGrande icono={UserRoundXIcon} etiqueta="Quitar foto" onClick={onQuitarFoto} />
+        </Grupo>
+      </>}
     </div>
   </header>;
 }

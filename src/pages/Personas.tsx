@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import type { PersonaFormHandle } from '../components/PersonaForm';
+import { PersonaForm } from '../components/PersonaForm';
 import { PersonasRibbon } from '../components/PersonasRibbon';
 import { PersonasSidebar } from '../components/PersonasSidebar';
+import type { RadioParroquialFiltro, SexoFiltro, TipoDocumentoFiltro } from '../types/personas';
 
-type Sexo = 'Todos' | 'Masculino' | 'Femenino';
-type TipoDocumento = 'Todos' | 'Sin Datos' | 'DNI' | 'LE' | 'CI' | 'LC' | 'PAS';
-type RadioParroquial = 'Todos' | 'Sí' | 'No';
+type Sexo = SexoFiltro;
+type TipoDocumento = TipoDocumentoFiltro;
+type RadioParroquial = RadioParroquialFiltro;
 
 interface Persona {
   id: number;
@@ -26,6 +29,8 @@ interface PersonasProps {
 }
 
 export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
+  const [modo, setModo] = useState<'padron' | 'nuevo'>('padron');
+  const formularioRef = useRef<PersonaFormHandle>(null);
   const [busqueda, setBusqueda] = useState('');
   const [sexo, setSexo] = useState<Sexo>('Todos');
   const [tipoDocumento, setTipoDocumento] = useState<TipoDocumento>('Todos');
@@ -39,21 +44,31 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
     setRadioParroquial('Todos');
   }
 
+  function volverAlPadron() {
+    formularioRef.current?.limpiar();
+    setModo('padron');
+  }
+
   return <div className="flex h-screen w-full flex-col overflow-hidden bg-sky-100 font-sans text-navy-900">
     <PersonasRibbon
-      onAbrir={() => undefined}
-      onNuevo={() => undefined}
+      modo={modo}
+      onAbrir={() => formularioRef.current?.guardar()}
+      onNuevo={() => setModo('nuevo')}
       onEditar={() => undefined}
       onDesactivar={() => undefined}
       onActualizar={() => undefined}
-      onBuscar={() => undefined}
-      onFiltros={() => undefined}
-      onLimpiar={limpiarFiltros}
+      onBuscar={() => formularioRef.current?.cargarFoto()}
+      onFiltros={() => formularioRef.current?.quitarFoto()}
+      onLimpiar={() => modo === 'nuevo' ? formularioRef.current?.limpiar() : limpiarFiltros()}
+      onGuardar={() => formularioRef.current?.guardar()}
+      onCancelar={volverAlPadron}
+      onCargarFoto={() => formularioRef.current?.cargarFoto()}
+      onQuitarFoto={() => formularioRef.current?.quitarFoto()}
       hayPersonaSeleccionada={personaSeleccionadaId !== null} />
 
     <div className="flex min-h-0 flex-1">
       <PersonasSidebar onVolverAgenda={onVolverAgenda} onCerrarSesion={onCerrarSesion} />
-      <main className="flex min-w-0 flex-1 flex-col bg-sky-100">
+      {modo === 'nuevo' ? <PersonaForm ref={formularioRef} onCancelar={volverAlPadron} onGuardar={() => undefined} /> : <main className="flex min-w-0 flex-1 flex-col bg-sky-100">
         <div className="flex shrink-0 items-end justify-between border-b border-sky-400 bg-gradient-to-b from-white to-sky-50 px-4 py-3">
           <div>
             <h2 className="text-[16px] font-semibold text-navy-900">Padrón general de personas</h2>
@@ -115,7 +130,7 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
           </div>
         </div>
         <footer className="shrink-0 border-t border-sky-400 bg-sky-50 px-4 py-1.5 text-[11px] text-navy-800/70">{personas.length} personas registradas</footer>
-      </main>
+      </main>}
     </div>
   </div>;
 }
