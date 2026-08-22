@@ -22,3 +22,7 @@ export interface PersonaFormData {
   observaciones: string;
   foto: File | null;
 }
+
+export interface PersonaRegistro extends PersonaFormData {
+  id: number;
+}

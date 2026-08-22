@@ -12,7 +12,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 
 interface PersonasRibbonProps {
-  modo: 'padron' | 'nuevo';
+  modo: 'padron' | 'nuevo' | 'editar';
   onAbrir: () => void;
   onNuevo: () => void;
   onEditar: () => void;

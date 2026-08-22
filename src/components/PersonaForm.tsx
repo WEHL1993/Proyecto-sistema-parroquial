@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import type { PersonaFormData } from '../types/personas';
 
@@ -10,8 +10,10 @@ export interface PersonaFormHandle {
 }
 
 interface PersonaFormProps {
+  modo: 'nuevo' | 'editar';
+  datosIniciales?: PersonaFormData;
   onCancelar: () => void;
-  onGuardar?: (datos: PersonaFormData) => void;
+  onGuardar: (datos: PersonaFormData) => void;
 }
 
 type ErroresFormulario = Partial<Record<'nombre' | 'apellido' | 'sexo' | 'email', string>>;
@@ -51,11 +53,23 @@ function Campo({
 
 const controlClase = 'h-7 rounded-[2px] border border-navy-600/30 bg-white px-2 text-[12px] font-normal text-navy-900 outline-none focus:border-amber-deep disabled:bg-sky-100 disabled:text-navy-800/50';
 
-export const PersonaForm = forwardRef<PersonaFormHandle, PersonaFormProps>(function PersonaForm({ onCancelar, onGuardar }, ref) {
-  const [datos, setDatos] = useState<PersonaFormData>(FORMULARIO_INICIAL);
+export const PersonaForm = forwardRef<PersonaFormHandle, PersonaFormProps>(function PersonaForm({ modo, datosIniciales, onCancelar, onGuardar }, ref) {
+  const [datos, setDatos] = useState<PersonaFormData>(datosIniciales ?? FORMULARIO_INICIAL);
   const [errores, setErrores] = useState<ErroresFormulario>({});
   const [vistaFoto, setVistaFoto] = useState<string | null>(null);
   const archivoRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setDatos(datosIniciales ?? FORMULARIO_INICIAL);
+    setErrores({});
+    if (!datosIniciales?.foto) {
+      setVistaFoto(null);
+      return;
+    }
+    const lector = new FileReader();
+    lector.onload = () => setVistaFoto(typeof lector.result === 'string' ? lector.result : null);
+    lector.readAsDataURL(datosIniciales.foto);
+  }, [datosIniciales]);
 
   function actualizar<K extends keyof PersonaFormData>(campo: K, valor: PersonaFormData[K]) {
     setDatos((actual) => ({ ...actual, [campo]: valor }));
@@ -93,15 +107,15 @@ export const PersonaForm = forwardRef<PersonaFormHandle, PersonaFormProps>(funct
       nuevosErrores.email = 'Ingrese un correo electrónico válido.';
     }
     setErrores(nuevosErrores);
-    if (Object.keys(nuevosErrores).length === 0) onGuardar?.(datos);
+    if (Object.keys(nuevosErrores).length === 0) onGuardar(datos);
   }
 
   useImperativeHandle(ref, () => ({ guardar: () => guardar(), limpiar, cargarFoto: () => archivoRef.current?.click(), quitarFoto }));
 
   return <form onSubmit={guardar} className="flex min-h-0 flex-1 flex-col overflow-auto bg-sky-100 px-4 py-4">
     <div className="mb-3 shrink-0">
-      <h2 className="text-[16px] font-semibold text-navy-900">Registrar nueva persona</h2>
-      <p className="mt-1 text-[12px] text-navy-800/70">Ingrese la información de la persona registrada en la parroquia</p>
+      <h2 className="text-[16px] font-semibold text-navy-900">{modo === 'nuevo' ? 'Registrar nueva persona' : 'Editar persona'}</h2>
+      <p className="mt-1 text-[12px] text-navy-800/70">{modo === 'nuevo' ? 'Ingrese la información de la persona registrada en la parroquia' : 'Modifique la información de la persona seleccionada'}</p>
     </div>
 
     <div className="grid shrink-0 grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_220px]">
