@@ -31,9 +31,10 @@ const TITULOS_VISTA: Record<VistaAgenda, string> = {
 interface AgendaProps {
   usuario: string;
   onCerrarSesion: () => void;
+  onSeleccionarModulo: (id: string) => void;
 }
 
-export function Agenda({ usuario, onCerrarSesion }: AgendaProps) {
+export function Agenda({ usuario, onCerrarSesion, onSeleccionarModulo }: AgendaProps) {
   const screenInit = useScreenInit();
   const [citas, setCitas] = useState<Appointment[]>(citasIniciales);
   const [vista, setVista] = useState<VistaAgenda>(
@@ -188,8 +189,9 @@ export function Agenda({ usuario, onCerrarSesion }: AgendaProps) {
           prev.map((c) => c.id === id ? { ...c, visible: !c.visible } : c)
           )
           }
-          onCerrarSesion={() => setConfirmarSalir(true)} />
-        
+          onCerrarSesion={() => setConfirmarSalir(true)}
+          onSeleccionarModulo={onSeleccionarModulo} />
+
 
         <main className="flex min-w-0 flex-1 flex-col bg-sky-100">
           <div className="flex shrink-0 items-center justify-between border-b border-sky-400 bg-gradient-to-b from-white to-sky-50 px-3 py-1.5">

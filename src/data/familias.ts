@@ -1,0 +1,148 @@
+import { Familia } from '../types/familia';
+
+export const familiasIniciales: Familia[] = [
+{
+  id: 'f-001',
+  nombre: 'Chávez Ixcot',
+  tipoResidencia: 'Casa propia',
+  domicilio: '4a. calle 3-21, zona 1',
+  localidad: 'Chiquimulilla',
+  codigoPostal: '06012',
+  provincia: 'Santa Rosa',
+  pais: 'Guatemala',
+  telefono: '4021-5678',
+  email: 'chavez.ixcot@example.com',
+  enRadioParroquial: true,
+  idPadre: 'p-rodolfo',
+  idMadre: 'p-marta-ixcot',
+  union: 'Matrimonio canónico',
+  fecha: '1998-04-18',
+  observaciones: 'Familia colaboradora del grupo de liturgia.',
+  integrantes: [
+  { id: 'i-001', idPersona: 'p-sofia', tipoIntegrante: 'Hija', filiacion: 'Legítima' },
+  { id: 'i-002', idPersona: 'p-samuel', tipoIntegrante: 'Hijo', filiacion: 'Legítima' }]
+
+},
+{
+  id: 'f-002',
+  nombre: 'Pérez Similox',
+  tipoResidencia: 'Alquilada',
+  domicilio: 'Caserío El Jícaro, km 4',
+  localidad: 'Chiquimulilla',
+  codigoPostal: '06012',
+  provincia: 'Santa Rosa',
+  pais: 'Guatemala',
+  telefono: '5510-2244',
+  email: '',
+  enRadioParroquial: true,
+  idPadre: 'p-julio-perez',
+  idMadre: 'p-ana-similox-perez',
+  union: 'Matrimonio canónico',
+  fecha: '2015-11-07',
+  observaciones: 'Padrinos de bautizo activos en la comunidad.',
+  integrantes: [
+  { id: 'i-003', idPersona: 'p-mateo-perez', tipoIntegrante: 'Hijo', filiacion: 'Legítima' }]
+
+},
+{
+  id: 'f-003',
+  nombre: 'Xocop Morales',
+  tipoResidencia: 'Casa propia',
+  domicilio: 'Aldea Chuisuc, sector 2',
+  localidad: 'Chuisuc',
+  codigoPostal: '06012',
+  provincia: 'Santa Rosa',
+  pais: 'Guatemala',
+  telefono: '3312-9087',
+  email: 'exocop@example.com',
+  enRadioParroquial: false,
+  idPadre: 'p-efrain-xocop',
+  idMadre: 'p-marta-xocop',
+  union: 'Unión de hecho',
+  fecha: '2005-08-22',
+  observaciones: 'Ministro extraordinario de la comunión, visita a enfermos.',
+  integrantes: []
+},
+{
+  id: 'f-004',
+  nombre: 'Morales Ixchop',
+  tipoResidencia: 'Casa propia',
+  domicilio: '2a. avenida 5-10, zona 2',
+  localidad: 'Chiquimulilla',
+  codigoPostal: '06012',
+  provincia: 'Santa Rosa',
+  pais: 'Guatemala',
+  telefono: '5589-3321',
+  email: 'morales.ixchop@example.com',
+  enRadioParroquial: false,
+  idPadre: 'p-francisco-morales',
+  idMadre: 'p-delfina-ixchop',
+  union: 'Matrimonio civil',
+  fecha: '2010-02-14',
+  observaciones: '',
+  integrantes: [
+  { id: 'i-004', idPersona: 'p-diego-morales', tipoIntegrante: 'Hijo', filiacion: 'Legítima' },
+  { id: 'i-005', idPersona: 'p-valeria-morales', tipoIntegrante: 'Hija', filiacion: 'Legítima' }]
+
+},
+{
+  id: 'f-005',
+  nombre: 'Similox Cuc',
+  tipoResidencia: 'Prestada',
+  domicilio: 'Caserío Las Flores',
+  localidad: 'Guazacapán',
+  codigoPostal: '06015',
+  provincia: 'Santa Rosa',
+  pais: 'Guatemala',
+  telefono: '',
+  email: '',
+  enRadioParroquial: false,
+  idPadre: 'p-pedro-similox',
+  idMadre: 'p-juana-cuc',
+  union: 'Sin unión formal',
+  fecha: '2020-06-01',
+  observaciones: 'Pendiente actualizar datos de contacto.',
+  integrantes: []
+},
+{
+  id: 'f-006',
+  nombre: 'Ixcot Chávez',
+  tipoResidencia: 'Casa propia',
+  domicilio: '6a. calle 1-45, zona 1',
+  localidad: 'Chiquimulilla',
+  codigoPostal: '06012',
+  provincia: 'Santa Rosa',
+  pais: 'Guatemala',
+  telefono: '4433-1298',
+  email: 'ixcot.familia@example.com',
+  enRadioParroquial: true,
+  idPadre: 'p-manuel-ixcot',
+  idMadre: 'p-rosa-chavez-ixcot',
+  union: 'Matrimonio canónico',
+  fecha: '1990-12-08',
+  observaciones: 'Familia fundadora del coro parroquial.',
+  integrantes: [
+  { id: 'i-006', idPersona: 'p-elena-ixcot', tipoIntegrante: 'Hija', filiacion: 'Legítima' }]
+
+},
+{
+  id: 'f-007',
+  nombre: 'Chávez Morales',
+  tipoResidencia: 'Alquilada',
+  domicilio: 'Aldea Las Lisas, sector 4',
+  localidad: 'Chiquimulilla',
+  codigoPostal: '06012',
+  provincia: 'Santa Rosa',
+  pais: 'Guatemala',
+  telefono: '5590-7712',
+  email: '',
+  enRadioParroquial: false,
+  idPadre: null,
+  idMadre: 'p-rosa-morales',
+  union: 'Unión de hecho',
+  fecha: '',
+  observaciones: 'Familia monoparental. Padre no registrado en el padrón.',
+  integrantes: [
+  { id: 'i-007', idPersona: 'p-ana-lucia-morales', tipoIntegrante: 'Hija', filiacion: 'Natural' }]
+
+}];

@@ -29,6 +29,14 @@ export default {content: [
           deep: '#A8841F',
         },
         charcoal: '#1E1C1A',
+        estado: {
+          error: '#A32218',
+          errorBg: '#FBEDEB',
+          aviso: '#9C6206',
+          avisoBg: '#FCF3E4',
+          exito: '#2E6B4F',
+          exitoBg: '#EAF3EE',
+        },
       },
       fontFamily: {
         sans: ['"Segoe UI"', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif'],
