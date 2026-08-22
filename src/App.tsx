@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Login } from './pages/Login';
 import { Agenda } from './pages/Agenda';
+import { Personas } from './pages/Personas';
 import { useScreenInit } from './useScreenInit.js';
 
-type Vista = 'login' | 'agenda';
+type Vista = 'login' | 'agenda' | 'personas';
 
 export function App() {
   const screenInit = useScreenInit();
@@ -23,9 +24,18 @@ export function App() {
 
   }
 
+  if (vista === 'personas') {
+    return (
+      <Personas
+        usuario={`P. Andrés Chocoj (${usuario})`}
+        onVolverAgenda={() => setVista('agenda')}
+        onCerrarSesion={() => setVista('login')} />);
+  }
+
   return (
     <Agenda
       usuario={`P. Andrés Chocoj (${usuario})`}
+      onAbrirPersonas={() => setVista('personas')}
       onCerrarSesion={() => setVista('login')} />);
 
 

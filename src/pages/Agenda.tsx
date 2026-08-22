@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { Appointment, VistaAgenda } from '../types/agenda';
 import { citasIniciales } from '../data/citas';
@@ -30,10 +30,11 @@ const TITULOS_VISTA: Record<VistaAgenda, string> = {
 
 interface AgendaProps {
   usuario: string;
+  onAbrirPersonas: () => void;
   onCerrarSesion: () => void;
 }
 
-export function Agenda({ usuario, onCerrarSesion }: AgendaProps) {
+export function Agenda({ usuario, onAbrirPersonas, onCerrarSesion }: AgendaProps) {
   const screenInit = useScreenInit();
   const [citas, setCitas] = useState<Appointment[]>(citasIniciales);
   const [vista, setVista] = useState<VistaAgenda>(
@@ -188,6 +189,7 @@ export function Agenda({ usuario, onCerrarSesion }: AgendaProps) {
           prev.map((c) => c.id === id ? { ...c, visible: !c.visible } : c)
           )
           }
+          onAbrirPersonas={onAbrirPersonas}
           onCerrarSesion={() => setConfirmarSalir(true)} />
         
 
