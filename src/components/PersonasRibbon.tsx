@@ -27,7 +27,10 @@ interface PersonasRibbonProps {
   onCargarFoto: () => void;
   onQuitarFoto: () => void;
   onCerrarConsulta: () => void;
-  hayPersonaSeleccionada: boolean;
+  puedeAbrir: boolean;
+  puedeEditar: boolean;
+  puedeDesactivar: boolean;
+  etiquetaEstado: 'Desactivar' | 'Reactivar';
 }
 
 interface BotonGrandeProps {
@@ -78,7 +81,10 @@ export function PersonasRibbon({
   onCargarFoto,
   onQuitarFoto,
   onCerrarConsulta,
-  hayPersonaSeleccionada
+  puedeAbrir,
+  puedeEditar,
+  puedeDesactivar,
+  etiquetaEstado
 }: PersonasRibbonProps) {
   return <header className="shrink-0 border-b border-navy-700/40 bg-sky-200">
     <div className="flex items-center justify-between bg-navy-800 px-3 py-1.5">
@@ -98,10 +104,10 @@ export function PersonasRibbon({
     <div className="flex h-[92px] items-stretch bg-gradient-to-b from-sky-100 to-sky-200 px-1 pt-1">
       {modo === 'padron' ? <>
         <Grupo titulo="Acciones">
-          <BotonGrande icono={FolderOpenIcon} etiqueta="Abrir" onClick={onAbrir} deshabilitado={!hayPersonaSeleccionada} />
+          <BotonGrande icono={FolderOpenIcon} etiqueta="Abrir" onClick={onAbrir} deshabilitado={!puedeAbrir} />
           <BotonGrande icono={UserPlusIcon} etiqueta="Nuevo" onClick={onNuevo} />
-          <BotonGrande icono={PencilIcon} etiqueta="Editar" onClick={onEditar} deshabilitado={!hayPersonaSeleccionada} />
-          <BotonGrande icono={UserRoundXIcon} etiqueta="Desactivar" onClick={onDesactivar} deshabilitado={!hayPersonaSeleccionada} />
+          <BotonGrande icono={PencilIcon} etiqueta="Editar" onClick={onEditar} deshabilitado={!puedeEditar} />
+          <BotonGrande icono={UserRoundXIcon} etiqueta={etiquetaEstado} onClick={onDesactivar} deshabilitado={!puedeDesactivar} />
           <BotonGrande icono={RefreshCwIcon} etiqueta="Actualizar" onClick={onActualizar} />
         </Grupo>
         <Grupo titulo="Consulta">

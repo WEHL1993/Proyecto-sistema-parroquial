@@ -25,4 +25,5 @@ export interface PersonaFormData {
 
 export interface PersonaRegistro extends PersonaFormData {
   id: number;
+  activo: boolean;
 }

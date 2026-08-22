@@ -3,6 +3,7 @@ import type { PersonaFormHandle } from '../components/PersonaForm';
 import { PersonaForm } from '../components/PersonaForm';
 import { PersonasRibbon } from '../components/PersonasRibbon';
 import { PersonasSidebar } from '../components/PersonasSidebar';
+import { ConfirmDialog } from '../components/ConfirmDialog';
 import type { PersonaFormData, PersonaRegistro, RadioParroquialFiltro, SexoFiltro, TipoDocumentoFiltro } from '../types/personas';
 
 type Sexo = SexoFiltro;
@@ -24,6 +25,7 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
   const [tipoDocumento, setTipoDocumento] = useState<TipoDocumento>('Todos');
   const [radioParroquial, setRadioParroquial] = useState<RadioParroquial>('Todos');
   const [personaSeleccionadaId, setPersonaSeleccionadaId] = useState<number | null>(null);
+  const [confirmarDesactivacion, setConfirmarDesactivacion] = useState(false);
 
   const personaSeleccionada = personas.find((persona) => persona.id === personaSeleccionadaId);
 
@@ -41,13 +43,20 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
 
   function guardarPersona(datos: PersonaFormData) {
     if (modo === 'editar' && personaSeleccionadaId !== null) {
-      setPersonas((actuales) => actuales.map((persona) => persona.id === personaSeleccionadaId ? { ...datos, id: persona.id } : persona));
+      setPersonas((actuales) => actuales.map((persona) => persona.id === personaSeleccionadaId ? { ...datos, id: persona.id, activo: persona.activo } : persona));
     } else {
       const siguienteId = personas.reduce((mayor, persona) => Math.max(mayor, persona.id), 0) + 1;
-      setPersonas((actuales) => [...actuales, { ...datos, id: siguienteId }]);
+      setPersonas((actuales) => [...actuales, { ...datos, id: siguienteId, activo: true }]);
       setPersonaSeleccionadaId(siguienteId);
     }
     setModo('padron');
+  }
+
+  function cambiarEstadoPersona() {
+    if (!personaSeleccionada) return;
+    setPersonas((actuales) => actuales.map((persona) => persona.id === personaSeleccionada.id ? { ...persona, activo: !persona.activo } : persona));
+    setPersonaSeleccionadaId(null);
+    setConfirmarDesactivacion(false);
   }
 
   return <div className="flex h-screen w-full flex-col overflow-hidden bg-sky-100 font-sans text-navy-900">
@@ -56,7 +65,9 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
       onAbrir={() => personaSeleccionada && setModo('consultar')}
       onNuevo={() => setModo('nuevo')}
       onEditar={() => personaSeleccionada && setModo('editar')}
-      onDesactivar={() => undefined}
+      onDesactivar={() => {
+        if (personaSeleccionada) setConfirmarDesactivacion(true);
+      }}
       onActualizar={() => undefined}
       onBuscar={() => formularioRef.current?.cargarFoto()}
       onFiltros={() => formularioRef.current?.quitarFoto()}
@@ -66,7 +77,10 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
       onCargarFoto={() => formularioRef.current?.cargarFoto()}
       onQuitarFoto={() => formularioRef.current?.quitarFoto()}
       onCerrarConsulta={volverAlPadron}
-      hayPersonaSeleccionada={personaSeleccionadaId !== null} />
+      puedeAbrir={personaSeleccionadaId !== null}
+      puedeEditar={Boolean(personaSeleccionada?.activo)}
+      puedeDesactivar={personaSeleccionadaId !== null}
+      etiquetaEstado={personaSeleccionada?.activo === false ? 'Reactivar' : 'Desactivar'} />
 
     <div className="flex min-h-0 flex-1">
       <PersonasSidebar onVolverAgenda={onVolverAgenda} onCerrarSesion={onCerrarSesion} />
@@ -108,16 +122,16 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
             <table className="w-full min-w-[920px] border-collapse text-left text-[11px]">
               <thead className="bg-sky-200 text-navy-900">
                 <tr>
-                  {['ID', 'Nombre completo', 'Sexo', 'Documento', 'Fecha de nacimiento', 'Teléfono', 'Celular', 'Radio parroquial'].map((columna) => <th key={columna} scope="col" className="border-b border-sky-400 px-2 py-2 font-semibold">{columna}</th>)}
+                  {['ID', 'Nombre completo', 'Sexo', 'Documento', 'Fecha de nacimiento', 'Teléfono', 'Celular', 'Radio parroquial', 'Estado'].map((columna) => <th key={columna} scope="col" className="border-b border-sky-400 px-2 py-2 font-semibold">{columna}</th>)}
                 </tr>
               </thead>
               <tbody>
                 {personas.length === 0 ? <tr>
-                  <td colSpan={8} className="h-48 px-4 text-center text-navy-800/70">
+                  <td colSpan={9} className="h-48 px-4 text-center text-navy-800/70">
                     <p className="font-semibold">No hay personas registradas.</p>
                     <p className="mt-1 text-[11px]">Utilice la opción Nuevo para registrar la primera persona.</p>
                   </td>
-                </tr> : personas.map((persona) => <tr key={persona.id} onClick={() => setPersonaSeleccionadaId(persona.id)} className={['border-b border-sky-200 hover:bg-sky-50', persona.id === personaSeleccionadaId ? 'bg-sky-100' : ''].join(' ')}>
+                </tr> : personas.map((persona) => <tr key={persona.id} onClick={() => setPersonaSeleccionadaId(persona.id)} className={['border-b border-sky-200 hover:bg-sky-50', persona.id === personaSeleccionadaId ? 'bg-sky-100' : '', !persona.activo ? 'text-navy-800/50' : ''].join(' ')}>
                   <td className="px-2 py-2">{persona.id}</td>
                   <td className="px-2 py-2">{[persona.nombre, persona.apellido, persona.apellidoMaterno].filter(Boolean).join(' ')}</td>
                   <td className="px-2 py-2">{persona.sexo}</td>
@@ -126,6 +140,7 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
                   <td className="px-2 py-2">{persona.telefonoCasa}</td>
                   <td className="px-2 py-2">{persona.telefonoMovil}</td>
                   <td className="px-2 py-2">{persona.perteneceRadioParroquial}</td>
+                  <td className="px-2 py-2">{persona.activo ? 'Activo' : 'Inactivo'}</td>
                 </tr>)}
               </tbody>
             </table>
@@ -134,5 +149,11 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
         <footer className="shrink-0 border-t border-sky-400 bg-sky-50 px-4 py-1.5 text-[11px] text-navy-800/70">{personas.length} personas registradas</footer>
       </main>}
     </div>
+    {confirmarDesactivacion && personaSeleccionada && <ConfirmDialog
+      titulo={personaSeleccionada.activo ? 'Desactivar persona' : 'Reactivar persona'}
+      mensaje={personaSeleccionada.activo ? `¿Está seguro de que desea desactivar a ${[personaSeleccionada.nombre, personaSeleccionada.apellido, personaSeleccionada.apellidoMaterno].filter(Boolean).join(' ')}? La persona permanecerá registrada en el padrón.` : `¿Está seguro de que desea reactivar a ${[personaSeleccionada.nombre, personaSeleccionada.apellido, personaSeleccionada.apellidoMaterno].filter(Boolean).join(' ')}?`}
+      textoConfirmar={personaSeleccionada.activo ? 'Sí, desactivar' : 'Sí, reactivar'}
+      onConfirmar={cambiarEstadoPersona}
+      onCancelar={() => setConfirmarDesactivacion(false)} />}
   </div>;
 }
