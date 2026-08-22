@@ -1,15 +1,17 @@
 import React from 'react';
-import { CalendarCheckIcon, UsersIcon, HomeIcon, BookOpenIcon, DropletsIcon, CoinsIcon, ChurchIcon, BoxIcon } from 'lucide-react';
+import { CalendarCheckIcon, UsersIcon, HomeIcon, BookOpenIcon, DropletsIcon, CoinsIcon, ChurchIcon, NotebookTextIcon, BoxIcon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { modulos } from '../data/modulos';
 
-export const ICONOS_MODULO: Record<string, BoxIcon> = {
+export const ICONOS_MODULO: Record<string, LucideIcon> = {
   agenda: CalendarCheckIcon,
   personas: UsersIcon,
   familias: HomeIcon,
   catequesis: BookOpenIcon,
   sacramental: DropletsIcon,
   economico: CoinsIcon,
-  celebraciones: ChurchIcon
+  celebraciones: ChurchIcon,
+  directorio: NotebookTextIcon
 };
 
 interface ModulosNavProps {
@@ -25,7 +27,7 @@ export function ModulosNav({ moduloActivo, onSeleccionarModulo }: ModulosNavProp
       </h2>
       <ul>
         {modulos.map((m) => {
-          const Icono = ICONOS_MODULO[m.id];
+          const Icono = ICONOS_MODULO[m.id] ?? BoxIcon;
           const activo = m.id === moduloActivo;
           return (
             <li key={m.id}>
