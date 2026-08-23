@@ -5,6 +5,7 @@ import { PersonasRibbon } from '../components/PersonasRibbon';
 import { PersonasSidebar } from '../components/PersonasSidebar';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import type { PersonaFormData, PersonaRegistro, RadioParroquialFiltro, SexoFiltro, TipoDocumentoFiltro } from '../types/personas';
+import { cambiarEstadoPersona as cambiarEstadoPersonaRemota, guardarPersona as guardarPersonaRemota, obtenerPersonas } from '../services/personasService';
 
 type Sexo = SexoFiltro;
 type TipoDocumento = TipoDocumentoFiltro;
@@ -46,6 +47,10 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
     }
   }, [personaSeleccionadaId, personasFiltradas]);
 
+  useEffect(() => {
+    obtenerPersonas().then(setPersonas);
+  }, []);
+
   function limpiarFiltros() {
     setBusqueda('');
     setSexo('Todos');
@@ -58,19 +63,25 @@ export function Personas({ onVolverAgenda, onCerrarSesion }: PersonasProps) {
     setModo('padron');
   }
 
-  function guardarPersona(datos: PersonaFormData) {
-    if (modo === 'editar' && personaSeleccionadaId !== null) {
-      setPersonas((actuales) => actuales.map((persona) => persona.id === personaSeleccionadaId ? { ...datos, id: persona.id, activo: persona.activo } : persona));
-    } else {
-      const siguienteId = personas.reduce((mayor, persona) => Math.max(mayor, persona.id), 0) + 1;
-      setPersonas((actuales) => [...actuales, { ...datos, id: siguienteId, activo: true }]);
-      setPersonaSeleccionadaId(siguienteId);
-    }
+  async function guardarPersona(datos: PersonaFormData) {
+    const base =
+    modo === 'editar' && personaSeleccionadaId !== null ?
+    { ...datos, id: personaSeleccionadaId, activo: personaSeleccionada?.activo ?? true } :
+    { ...datos, id: personas.reduce((mayor, persona) => Math.max(mayor, persona.id), 0) + 1, activo: true };
+    const personaGuardada = await guardarPersonaRemota(base);
+    setPersonas((actuales) => {
+      const existe = actuales.some((persona) => persona.id === personaGuardada.id);
+      return existe ?
+      actuales.map((persona) => persona.id === personaGuardada.id ? personaGuardada : persona) :
+      [...actuales, personaGuardada];
+    });
+    setPersonaSeleccionadaId(personaGuardada.id);
     setModo('padron');
   }
 
-  function cambiarEstadoPersona() {
+  async function cambiarEstadoPersona() {
     if (!personaSeleccionada) return;
+    await cambiarEstadoPersonaRemota(personaSeleccionada.id, !personaSeleccionada.activo);
     setPersonas((actuales) => actuales.map((persona) => persona.id === personaSeleccionada.id ? { ...persona, activo: !persona.activo } : persona));
     setPersonaSeleccionadaId(null);
     setConfirmarDesactivacion(false);

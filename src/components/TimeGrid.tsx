@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Appointment } from '../types/agenda';
 import {
   ALTO_HORA,

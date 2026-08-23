@@ -1,4 +1,3 @@
-import React from 'react';
 import { Appointment } from '../types/agenda';
 import {
   DIAS_LARGOS,

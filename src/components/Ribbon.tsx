@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { CalendarPlusIcon, Trash2Icon, RefreshCwIcon, PrinterIcon, FileSearchIcon, SettingsIcon, CalendarDaysIcon, CalendarRangeIcon, CalendarIcon, BriefcaseBusinessIcon, CalendarCheckIcon, BoxIcon, FolderOpenIcon } from "lucide-react";
+import { CalendarPlusIcon, Trash2Icon, RefreshCwIcon, PrinterIcon, FileSearchIcon, SettingsIcon, CalendarDaysIcon, CalendarRangeIcon, CalendarIcon, BriefcaseBusinessIcon, CalendarCheckIcon, FolderOpenIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { VistaAgenda } from "../types/agenda";
 import { PageSetupDialog } from "./PageSetupDialog";
 type PestanaRibbon = 'inicio' | 'impresion';
@@ -17,7 +18,7 @@ interface RibbonProps {
   hayCitaSeleccionada: boolean;
 }
 interface BotonGrandeProps {
-  icono: BoxIcon;
+  icono: LucideIcon;
   etiqueta: string;
   onClick?: () => void;
   activo?: boolean;
