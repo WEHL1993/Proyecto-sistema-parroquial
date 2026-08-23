@@ -1,3 +1,4 @@
+import React from 'react';
 import { UserIcon, CalendarIcon, WifiIcon, LogOutIcon } from 'lucide-react';
 import { formatoFechaLarga } from '../utils/agenda';
 

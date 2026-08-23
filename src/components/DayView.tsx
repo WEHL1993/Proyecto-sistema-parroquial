@@ -1,3 +1,4 @@
+import React from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { Appointment } from '../types/agenda';
 import { TimeGrid } from './TimeGrid';

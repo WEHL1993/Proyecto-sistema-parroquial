@@ -12,7 +12,6 @@ import { AppointmentDialog } from '../components/AppointmentDialog';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { PrintPreviewDialog } from '../components/PrintPreviewDialog';
 import { useScreenInit } from '../useScreenInit.js';
-import { eliminarCita as eliminarCitaRemota, guardarCita as guardarCitaRemota, obtenerCitas } from '../services/agendaService';
 import {
   MESES,
   ESTILO_PRIORIDAD,
@@ -68,10 +67,7 @@ export function Agenda({ usuario, onAbrirPersonas, onCerrarSesion }: AgendaProps
   );
 
   const agendaVisible = calendarios[0].visible;
-  const citasVisibles = useMemo(
-    () => (agendaVisible ? citas : []),
-    [agendaVisible, citas]
-  );
+  const citasVisibles = agendaVisible ? citas : [];
 
   const diasSemana = useMemo(() => {
     const lunes = inicioDeSemana(fecha);
@@ -130,34 +126,25 @@ export function Agenda({ usuario, onAbrirPersonas, onCerrarSesion }: AgendaProps
     setDialogo({ modo: 'editar', cita });
   }
 
-  async function guardar(cita: Appointment) {
-    const citaGuardada = await guardarCitaRemota(cita);
+  function guardar(cita: Appointment) {
     setCitas((prev) => {
-      const existe = prev.some((c) => c.id === citaGuardada.id);
-      return existe ?
-      prev.map((c) => c.id === citaGuardada.id ? citaGuardada : c) :
-      [...prev, citaGuardada];
+      const existe = prev.some((c) => c.id === cita.id);
+      return existe ? prev.map((c) => c.id === cita.id ? cita : c) : [...prev, cita];
     });
-    setSeleccionadaId(citaGuardada.id);
-    setFecha(new Date(citaGuardada.inicio));
+    setSeleccionadaId(cita.id);
+    setFecha(new Date(cita.inicio));
     setDialogo(null);
     anunciar(
       dialogo?.modo === 'editar' ? 'Cambios guardados.' : 'Cita creada correctamente.'
     );
   }
 
-  async function eliminarCita() {
+  function eliminarCita() {
     if (!seleccionadaId) return;
-    await eliminarCitaRemota(seleccionadaId);
     setCitas((prev) => prev.filter((c) => c.id !== seleccionadaId));
     setSeleccionadaId(null);
     setConfirmarEliminar(false);
     anunciar('Cita eliminada de la agenda.');
-  }
-
-  async function actualizar() {
-    setCitas(await obtenerCitas());
-    anunciar('Agenda actualizada desde el servidor.');
   }
 
   const tituloRango =
@@ -181,7 +168,7 @@ export function Agenda({ usuario, onAbrirPersonas, onCerrarSesion }: AgendaProps
         }}
         onNuevo={() => abrirNueva()}
         onEliminar={() => setConfirmarEliminar(true)}
-        onActualizar={actualizar}
+        onActualizar={() => anunciar('Agenda actualizada desde el servidor.')}
         onHoy={() => setFecha(new Date())}
         onVistaPrevia={() => setVistaPreviaAbierta(true)}
         hayCitaSeleccionada={Boolean(seleccionada)} />

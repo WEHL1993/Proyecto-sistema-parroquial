@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { PrinterIcon, XIcon } from 'lucide-react';
 import { Appointment, VistaAgenda } from '../types/agenda';
 import {
@@ -9,6 +9,7 @@ import {
   formatoFechaLarga,
   formatoHora,
   inicioDeSemana,
+  mismaFecha,
   sumarDias } from
 '../utils/agenda';
 
