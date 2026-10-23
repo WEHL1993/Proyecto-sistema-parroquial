@@ -179,4 +179,4 @@ Muchas gracias.
 - **Ritmo:** hablar despacio y dejar que el público vea cada acción en pantalla antes de explicar la siguiente.
 - **Evitar palabras técnicas:** decir "ventana" en lugar de "diálogo", "botón" en lugar de "componente", "guardar" en lugar de "persistir".
 - **Si alguien pregunta por la seguridad de la contraseña:** en la versión actual de demostración, el sistema solo revisa que los dos campos estén llenos. La revisión de que el usuario y la contraseña sean correctos se conecta con la parte interna que explicó Marvin.
-- **Si alguien pregunta si los recordatorios ya avisan:** en esta versión se puede escoger el recordatorio al crear la cita, pero conviene no prometer el aviso hasta confirmarlo con el equipo.
+- **Si alguien pregunta si los recordatorios ya avisan:** en esta versión se puede escoger el recordatorio y queda guardado en la cita, pero el sistema todavía no muestra el aviso. Conviene presentarlo como una función que se completará más adelante.
